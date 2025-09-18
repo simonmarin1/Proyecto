@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light" style="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Pruebas y Testing - SmartTeam Coach</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Times+New+Roman:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 32px 80px;
+            position: relative;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #000;
+            background: white;
+        }
+        .cover-page {
+            text-align: center;
+            margin-bottom: 50px;
+            page-break-after: always;
+        }
+        .cover-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 80px 0 30px 0;
+            text-transform: uppercase;
+        }
+        .cover-subtitle {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        .version-info {
+            font-size: 14px;
+            margin: 40px 0;
+            color: #666;
+        }
+        .date {
+            font-size: 14px;
+            margin-top: 60px;
+        }
+        h1 {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin: 30px 0 20px 0;
+            text-transform: uppercase;
+        }
+        h2 {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 25px 0 15px 0;
+            color: #333;
+        }
+        h3 {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 20px 0 10px 0;
+            color: #444;
+        }
+        p {
+            text-align: justify;
+            margin: 12px 0;
+            text-indent: 0.3in;
+        }
+        .no-indent {
+            text-indent: 0;
+        }
+        .test-case-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 11px;
+        }
+        .test-case-table th,
+        .test-case-table td {
+            border: 1px solid #333;
+            padding: 6px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .test-case-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            text-align: center;
+        }
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 12px;
+        }
+        .metrics-table th,
+        .metrics-table td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: left;
+        }
+        .metrics-table th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+        .pass-status {
+            background-color: #d4edda;
+            color: #155724;
+            font-weight: bold;
+            text-align: center;
+        }
+        .fail-status {
+            background-color: #f8d7da;
+            color: #721c24;
+            font-weight: bold;
+            text-align: center;
+        }
+        .pending-status {
+            background-color: #fff3cd;
+            color: #856404;
+            font-weight: bold;
+            text-align: center;
+        }
+        .info-box {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 15px 0;
+            text-indent: 0;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-left: 4px solid #f39c12;
+            padding: 15px;
+            margin: 15px 0;
+            text-indent: 0;
+        }
+        .success-box {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            text-indent: 0;
+        }
+        ul,
+        ol {
+            margin: 15px 0;
+            padding-left: 40px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .page-break {
+            page-break-before: always;
+            margin-top: 40px;
+        }
+        .test-priority-high {
+            background-color: #ffebee;
+            border-left: 3px solid #f44336;
+        }
+        .test-priority-medium {
+            background-color: #fff8e1;
+            border-left: 3px solid #ff9800;
+        }
+        .test-priority-low {
+            background-color: #e8f5e8;
+            border-left: 3px solid #4caf50;
+        }
+        .code-block {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-left: 4px solid #007acc;
+            padding: 12px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            white-space: pre-wrap;
+            text-indent: 0;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .summary-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            background: #fafafa;
+            text-indent: 0;
+        }
+        .test-section-header {
+            background: #f0f0f0;
+            padding: 10px;
+            margin: 20px 0 10px 0;
+            border-left: 4px solid #333;
+            font-weight: bold;
+            text-indent: 0;
+        }
+    </style>
+</head>
+<body style="">
+    <div class="cover-page">
+        <div class="cover-title">Plan de Pruebas y Testing</div>
+        <div class="cover-subtitle">SmartTeam Coach</div>
+        <div class="cover-subtitle">Plataforma de Inteligencia Artificial para Análisis Deportivo</div>
+        <div class="version-info">
+            <strong>Versión del Plan:</strong> 1.0<br>
+            <strong>Tipo de Testing:</strong> Funcional, Integración, Sistema<br>
+            <strong>Responsables:</strong> Simón Marín Marulanda, José David Sánchez Escobar<br>
+            <strong>QA Lead:</strong> Equipo de Desarrollo
+        </div>
+        <div class="date">Diciembre de 2024</div>
+    </div>
+    <div class="page-break">
+        <h1>Índice de Contenidos</h1>
+        <div style="text-indent: 0; margin: 20px 0; line-height: 2">
+            <strong>1. Introducción y Objetivos</strong> ................................................ 3<br>
+            <strong>2. Estrategia de Pruebas</strong> ................................................... 4<br>
+            <strong>3. Tipos de Pruebas</strong> ....................................................... 5<br>
+            <strong>4. Casos de Prueba Detallados</strong> ............................................. 7<br>
+            <strong>5. Criterios de Aceptación</strong> ............................................... 12<br>
+            <strong>6. Pruebas del Modelo de Machine Learning</strong> .................................. 13<br>
+            <strong>7. Pruebas de la Interfaz Web</strong> ............................................ 15<br>
+            <strong>8. Pruebas de Rendimiento</strong> ............................................... 17<br>
+            <strong>9. Plan de Testing del API</strong> .............................................. 19<br>
+            <strong>10. Reporte de Resultados</strong> ............................................... 21<br>
+            <strong>11. Conclusiones y Recomendaciones</strong> ....................................... 23
+        </div>
+    </div>
+    <div class="page-break">
+        <h1>1. Introducción y Objetivos</h1>
+        <h2>1.1 Propósito del Documento</h2>
+        <p>
+            Este documento define el plan completo de pruebas para SmartTeam Coach, una plataforma de inteligencia
+            artificial diseñada para el análisis deportivo integral. El plan establece los objetivos, estrategias, tipos de
+            pruebas, criterios de aceptación y métricas de calidad necesarias para garantizar la funcionalidad,
+            confiabilidad y usabilidad del sistema.
+        </p>
+        <p>
+            El testing de SmartTeam Coach es crítico dado que la plataforma toma decisiones basadas en algoritmos de Machine
+            Learning que afectan directamente las recomendaciones deportivas para jugadores y equipos.
+        </p>
+        <h2>1.2 Objetivos de Testing</h2>
+        <h3>1.2.1 Objetivos Primarios</h3>
+        <ul>
+            <li>Verificar que todas las funcionalidades del sistema operen según las especificaciones</li>
+            <li>Validar la precisión y confiabilidad de los algoritmos de Machine Learning</li>
+            <li>Asegurar la integridad de los datos durante todo el flujo de procesamiento</li>
+            <li>Confirmar la usabilidad y accesibilidad de la interfaz web</li>
+            <li>Verificar el rendimiento del sistema bajo condiciones normales y de estrés</li>
+        </ul>
+        <h3>1.2.2 Objetivos Secundarios</h3>
+        <ul>
+            <li>Identificar y documentar posibles mejoras en la experiencia de usuario</li>
+            <li>Validar la escalabilidad del sistema para futuras expansiones</li>
+            <li>Asegurar la compatibilidad cross-browser de la interfaz web</li>
+            <li>Verificar la robustez del manejo de errores y excepciones</li>
+        </ul>
+        <h2>1.3 Alcance del Testing</h2>
+        <div class="info-box">
+            <strong>Componentes Incluidos en el Testing:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px">
+                <li>API REST (Flask backend)</li>
+                <li>Motor de Machine Learning (clasificación y recomendaciones)</li>
+                <li>Interfaz web (HTML/CSS/JavaScript)</li>
+                <li>Gestión de datos (CSV, validaciones)</li>
+                <li>Integración end-to-end</li>
+            </ul>
+        </div>
+        <div class="warning-box">
+            <strong>Componentes Excluidos del Testing Actual:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px">
+                <li>Testing de seguridad avanzado (pendiente para v2.0)</li>
+                <li>Testing de carga con grandes volúmenes de datos</li>
+                <li>Testing de compatibilidad móvil (fuera de alcance v1.0)</li>
+                <li>Testing de integración con sistemas externos</li>
+            </ul>
+        </div>
+        <h2>1.4 Criterios de Éxito del Plan de Testing</h2>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th>Métrica</th>
+                    <th>Objetivo</th>
+                    <th>Medición</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Cobertura de Casos de Prueba</td>
+                    <td>≥ 95%</td>
+                    <td>Casos ejecutados / Casos planificados</td>
+                </tr>
+                <tr>
+                    <td>Tasa de Éxito</td>
+                    <td>≥ 90%</td>
+                    <td>Casos exitosos / Casos ejecutados</td>
+                </tr>
+                <tr>
+                    <td>Precisión ML</td>
+                    <td>≥ 80%</td>
+                    <td>Clasificaciones correctas / Total clasificaciones</td>
+                </tr>
+                <tr>
+                    <td>Tiempo de Respuesta API</td>
+                    <td>≤ 2 segundos</td>
+                    <td>Tiempo promedio de respuesta endpoints</td>
+                </tr>
+                <tr>
+                    <td>Compatibilidad Browser</td>
+                    <td>100%</td>
+                    <td>Funcionalidad en Chrome, Firefox, Safari, Edge</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>1.5 Recursos y Responsabilidades</h2>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th>Rol</th>
+                    <th>Responsable</th>
+                    <th>Responsabilidades</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Test Manager</td>
+                    <td>Simón Marín Marulanda</td>
+                    <td>Planificación, coordinación, reportes de progreso</td>
+                </tr>
+                <tr>
+                    <td>ML Tester</td>
+                    <td>José David Sánchez Escobar</td>
+                    <td>Testing de algoritmos ML, validación de datos</td>
+                </tr>
+                <tr>
+                    <td>Frontend Tester</td>
+                    <td>Equipo de Desarrollo</td>
+                    <td>Testing de interfaz, usabilidad, compatibilidad</td>
+                </tr>
+                <tr>
+                    <td>API Tester</td>
+                    <td>Equipo de Desarrollo</td>
+                    <td>Testing de endpoints, integración, rendimiento</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>1.6 Cronograma de Testing</h2>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th>Fase</th>
+                    <th>Duración</th>
+                    <th>Actividades Principales</th>
+                    <th>Entregables</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Preparación</td>
+                    <td>2 días</td>
+                    <td>Setup entorno, datos de prueba</td>
+                    <td>Entorno configurado, datos test</td>
+                </tr>
+                <tr>
+                    <td>Pruebas Unitarias</td>
+                    <td>3 días</td>
+                    <td>Testing componentes individuales</td>
+                    <td>Casos unitarios ejecutados</td>
+                </tr>
+                <tr>
+                    <td>Pruebas Integración</td>
+                    <td>4 días</td>
+                    <td>Testing interacción componentes</td>
+                    <td>Casos integración ejecutados</td>
+                </tr>
+                <tr>
+                    <td>Pruebas Sistema</td>
+                    <td>5 días</td>
+                    <td>Testing end-to-end completo</td>
+                    <td>Casos sistema ejecutados</td>
+                </tr>
+                <tr>
+                    <td>Reporte Final</td>
+                    <td>1 día</td>
+                    <td>Análisis resultados, recomendaciones</td>
+                    <td>Reporte final de testing</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="page-break">
+        <h1>2. Estrategia de Pruebas</h1>
+        <h2>2.1 Enfoque de Testing</h2>
+        <p>
+            SmartTeam Coach implementará una estrategia de testing híbrida que combina enfoques manuales y automatizados,
+            con énfasis especial en la validación de los algoritmos de Machine Learning y la experiencia de usuario.
+        </p>
+        <h3>2.1.1 Pirámide de Testing</h3>
+        <div style="text-align: center; margin: 30px 0">
+            <div style="border: 2px solid #333; padding: 20px; background: #f9f9f9">
+                <strong>Pruebas End-to-End (10%)</strong><br>
+                Testing completo del flujo de usuario<br><br>
+                <strong>Pruebas de Integración (30%)</strong><br>
+                Testing de interacción entre componentes<br><br>
+                <strong>Pruebas Unitarias (60%)</strong><br>
+                Testing de funciones y métodos individuales
+            </div>
+        </div>
+        <h3>2.1.2 Tipos de Testing por Componente</h3>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th>Componente</th>
+                    <th>Tipo de Prueba Principal</th>
+                    <th>Herramientas</th>
+                    <th>Cobertura Objetivo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>API Flask</td>
+                    <td>Pruebas de Integración</td>
+                    <td>Pytest, Postman</td>
+                    <td>95%</td>
+                </tr>
+                <tr>
+                    <td>ML Engine</td>
+                    <td>Pruebas Unitarias + Validación</td>
+                    <td>Pytest, scikit-learn metrics</td>
+                    <td>90%</td>
+                </tr>
+                <tr>
+                    <td>Frontend Web</td>
+                    <td>Pruebas Manuales + E2E</td>
+                    <td>Browser testing, Selenium</td>
+                    <td>100%</td>
+                </tr>
+                <tr>
+                    <td>Data Layer</td>
+                    <td>Pruebas Unitarias</td>
+                    <td>Pytest, pandas testing</td>
+                    <td>95%</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>2.2 Metodología de Testing</h2>
+        <h3>2.2.1 Proceso de Ejecución</h3>
+        <ol>
+            <li><strong>Preparación del Entorno:</strong> Setup de datos de prueba y configuración</li>
+            <li><strong>Ejecución de Casos:</strong> Seguimiento sistemático de casos de prueba</li>
+            <li><strong>Registro de Resultados:</strong> Documentación detallada de resultados</li>
+            <li><strong>Análisis de Defectos:</strong> Clasificación y priorización de issues</li>
+            <li><strong>Re-testing:</strong> Verificación de correcciones implementadas</li>
+            <li><strong>Regression Testing:</strong> Validación de no-regresión</li>
+        </ol>
+        <h3>2.2.2 Gestión de Datos de Prueba</h3>
+        <div class="info-box">
+            <strong>Datasets de Prueba:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px">
+                <li><strong>Dataset Pequeño:</strong> 10 jugadores para pruebas rápidas</li>
+                <li><strong>Dataset Medio:</strong> 50 jugadores para pruebas estándar</li>
+                <li><strong>Dataset Grande:</strong> 200 jugadores para pruebas de rendimiento</li>
+                <li><strong>Dataset Inválido:</strong> Datos con errores para testing de validación</li>
+            </ul>
+        </div>
+        <h2>2.3 Criterios de Entrada y Salida</h2>
+        <h3>2.3.1 Criterios de Entrada (Entry Criteria)</h3>
+        <ul>
+            <li>Código fuente completamente desarrollado e integrado</li>
+            <li>Entorno de testing configurado y funcionando</li>
+            <li>Datos de prueba preparados y validados</li>
+            <li>Casos de prueba definidos y revisados</li>
+            <li>Build estable disponible para testing</li>
+        </ul>
+        <h3>2.3.2 Criterios de Salida (Exit Criteria)</h3>
+        <ul>
+            <li>≥ 95% de casos de prueba ejecutados exitosamente</li>
+            <li>≤ 5% de defectos críticos sin resolver</li>
+            <li>Todas las funcionalidades principales validadas</li>
+            <li>Precisión del ML ≥ 80% en dataset de validación</li>
+            <li>Rendimiento dentro de límites aceptables</li>
+            <li>Documentación de resultados completa</li>
+        </ul>
+        <h2>2.4 Gestión de Riesgos en Testing</h2>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th>Riesgo</th>
+                    <th>Probabilidad</th>
+                    <th>Impacto</th>
+                    <th>Mitigación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Datos de prueba insuficientes</td>
+                    <td>Media</td>
+                    <td>Alto</td>
+                    <td>Generar datasets sintéticos adicionales</td>
+                </tr>
+                <tr>
+                    <td>Algoritmo ML inestable</td>
+                    <td>Baja</td>
+                    <td>Alto</td>
+                    <td>Testing exhaustivo con múltiples datasets</td>
+                </tr>
+                <tr>
+                    <td>Incompatibilidad browsers</td>
+                    <td>Media</td>
+                    <td>Medio</td>
+                    <td>Testing en múltiples navegadores</td>
+                </tr>
+                <tr>
+                    <td>Rendimiento degradado</td>
+                    <td>Baja</td>
+                    <td>Medio</td>
+                    <td>Pruebas de carga con datasets grandes</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>2.5 Herramientas de Testing</h2>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th>Categoría</th>
+                    <th>Herramienta</th>
+                    <th>Propósito</th>
+                    <th>Licencia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Testing Framework</td>
+                    <td>Pytest</td>
+                    <td>Pruebas unitarias y de integración</td>
+                    <td>Open Source</td>
+                </tr>
+                <tr>
+                    <td>API Testing</td>
+                    <td>Postman</td>
+                    <td>Testing manual de endpoints</td>
+                    <td>Freemium</td>
+                </tr>
+                <tr>
+                    <td>Browser Testing</td>
+                    <td>Chrome DevTools</td>
+                    <td>Testing y debugging frontend</td>
+                    <td>Gratuito</td>
+                </tr>
+                <tr>
+                    <td>ML Validation</td>
+                    <td>scikit-learn metrics</td>
+                    <td>Validación de modelos ML</td>
+                    <td>Open Source</td>
+                </tr>
+                <tr>
+                    <td>Data Validation</td>
+                    <td>pandas testing</td>
+                    <td>Validación de transformaciones de datos</td>
+                    <td>Open Source</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="page-break">
+        <h1>3. Tipos de Pruebas</h1>
+        <h2>3.1 Pruebas Unitarias</h2>
+        <p>
+            Las pruebas unitarias se enfocan en validar el comportamiento de funciones y métodos individuales, especialmente
+            en los componentes de lógica de negocio y procesamiento de datos.
+        </p>
+        <h3>3.1.1 Alcance de Pruebas Unitarias</h3>
+        <div class="test-section-header">Componentes a Testear</div>
+        <ul>
+            <li><strong>Funciones de Validación de Datos:</strong> Validación de entrada de jugadores</li>
+            <li><strong>Algoritmos de Clasificación:</strong> Lógica de categorización de jugadores</li>
+            <li><strong>Cálculos de Métricas:</strong> Funciones matemáticas y estadísticas</li>
+            <li><strong>Transformadores de Datos:</strong> Normalización y procesamiento</li>
+            <li><strong>Generadores de Recomendaciones:</strong> Lógica de sugerencias</li>
+        </ul>
+        <div class="code-block">
+# Ejemplo de Prueba Unitaria def test_player_classification(): """Test que valida la clasificación correcta de
+jugadores""" player_data = { 'rendimiento_ofensivo': 8, 'rendimiento_defensivo': 6, 'edad': 25,
+'minutos_jugados': 1500 } classifier = PlayerClassifier() result = classifier.classify(player_data) assert
+result['category'] == 'Alto Rendimiento' assert result['confidence'] >= 0.7 assert 'recommendations' in result
+        </div>
+        <h3>3.1.2 Casos de Prueba Unitarios Clave</h3>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 15%">ID</th>
+                    <th style="width: 25%">Función</th>
+                    <th style="width: 30%">Caso de Prueba</th>
+                    <th style="width: 20%">Resultado Esperado</th>
+                    <th style="width: 10%">Prioridad</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-high">
+                    <td>UT-001</td>
+                    <td>validate_player_data()</td>
+                    <td>Validar datos completos y válidos</td>
+                    <td>Retorna True, sin errores</td>
+                    <td>Alta</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>UT-002</td>
+                    <td>validate_player_data()</td>
+                    <td>Validar con edad inválida (< 16)</td>
+                    <td>Retorna False, error de edad</td>
+                    <td>Alta</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>UT-003</td>
+                    <td>classify_player()</td>
+                    <td>Jugador con rendimiento alto (8,8)</td>
+                    <td>Categoría 'Alto Rendimiento'</td>
+                    <td>Alta</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>UT-004</td>
+                    <td>calculate_metrics()</td>
+                    <td>Cálculo de rendimiento promedio</td>
+                    <td>Promedio correcto de ofensivo/defensivo</td>
+                    <td>Media</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>UT-005</td>
+                    <td>generate_recommendations()</td>
+                    <td>Recomendaciones para bajo rendimiento</td>
+                    <td>Lista de 3-5 recomendaciones</td>
+                    <td>Media</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>3.2 Pruebas de Integración</h2>
+        <p>
+            Las pruebas de integración validan la correcta interacción entre diferentes componentes del sistema, asegurando
+            que el flujo de datos y la comunicación funcionen apropiadamente.
+        </p>
+        <h3>3.2.1 Estrategia de Integración</h3>
+        <div class="info-box">
+            <strong>Enfoque Big Bang:</strong> Dada la simplicidad del sistema, se implementa integración simultánea de
+            todos los componentes, seguida de testing exhaustivo de los puntos de integración críticos.
+        </div>
+        <h3>3.2.2 Puntos de Integración Críticos</h3>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 15%">ID</th>
+                    <th style="width: 30%">Integración</th>
+                    <th style="width: 35%">Caso de Prueba</th>
+                    <th style="width: 20%">Criterio de Éxito</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-high">
+                    <td>IT-001</td>
+                    <td>Frontend → API</td>
+                    <td>Envío de formulario de jugador</td>
+                    <td>Datos recibidos correctamente en backend</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>IT-002</td>
+                    <td>API → ML Engine</td>
+                    <td>Procesamiento de datos para análisis</td>
+                    <td>ML recibe datos en formato correcto</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>IT-003</td>
+                    <td>ML Engine → Data Layer</td>
+                    <td>Persistencia de resultados de análisis</td>
+                    <td>Resultados guardados en CSV correctamente</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>IT-004</td>
+                    <td>Data Layer → API</td>
+                    <td>Recuperación de datos históricos</td>
+                    <td>Datos retornados en formato JSON válido</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>3.3 Pruebas de Sistema</h2>
+        <p>
+            Las pruebas de sistema evalúan el comportamiento completo de SmartTeam Coach como una aplicación integrada,
+            validando que cumple con todos los requisitos funcionales y no funcionales.
+        </p>
+        <h3>3.3.1 Escenarios de Sistema Completo</h3>
+        <div class="test-section-header">Flujo Principal de Usuario</div>
+        <ol>
+            <li>Usuario accede a la aplicación web</li>
+            <li>Completa formulario con datos de jugador</li>
+            <li>Sistema valida y procesa la información</li>
+            <li>ML Engine analiza y clasifica al jugador</li>
+            <li>Sistema genera recomendaciones personalizadas</li>
+            <li>Usuario visualiza resultados y puede exportar datos</li>
+        </ol>
+        <h2>3.4 Pruebas de Aceptación</h2>
+        <p>
+            Las pruebas de aceptación validan que el sistema cumple con las expectativas y necesidades de los usuarios
+            finales (entrenadores, directores deportivos).
+        </p>
+        <h3>3.4.1 Criterios de Aceptación del Usuario</h3>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 15%">ID</th>
+                    <th style="width: 40%">Historia de Usuario</th>
+                    <th style="width: 35%">Criterio de Aceptación</th>
+                    <th style="width: 10%">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>AC-001</td>
+                    <td>Como entrenador, quiero ingresar datos de un jugador y recibir un análisis automático</td>
+                    <td>El sistema procesa datos en ≤ 3 segundos y muestra análisis completo</td>
+                    <td class="pending-status">Pendiente</td>
+                </tr>
+                <tr>
+                    <td>AC-002</td>
+                    <td>Como director deportivo, quiero visualizar estadísticas del equipo completo</td>
+                    <td>Dashboard muestra métricas agregadas y comparativas claras</td>
+                    <td class="pending-status">Pendiente</td>
+                </tr>
+                <tr>
+                    <td>AC-003</td>
+                    <td>Como usuario, quiero recibir recomendaciones específicas para mejorar jugadores</td>
+                    <td>Sistema genera 3-5 recomendaciones actionables por jugador</td>
+                    <td class="pending-status">Pendiente</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="warning-box">
+            <strong>Nota Importante:</strong> Las pruebas de aceptación requieren validación con usuarios reales del dominio
+            deportivo para asegurar que las recomendaciones y análisis sean relevantes y útiles en contextos reales.
+        </div>
+    </div>
+    <div class="page-break">
+        <h1>4. Casos de Prueba Detallados</h1>
+        <h2>4.1 Casos de Prueba para Gestión de Jugadores</h2>
+        <div class="test-section-header">Módulo: Crear Jugador</div>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 15%">Nombre</th>
+                    <th style="width: 25%">Descripción</th>
+                    <th style="width: 20%">Pasos</th>
+                    <th style="width: 15%">Resultado Esperado</th>
+                    <th style="width: 10%">Prioridad</th>
+                    <th style="width: 5%">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-high">
+                    <td>TC-001</td>
+                    <td>Crear Jugador Válido</td>
+                    <td>Verificar creación exitosa de jugador con datos válidos</td>
+                    <td>
+                        1. Abrir formulario<br>
+                        2. Completar todos los campos<br>
+                        3. Hacer clic en "Guardar"
+                    </td>
+                    <td>
+                        - Jugador creado exitosamente<br>
+                        - Mensaje de confirmación<br>
+                        - Redirección a lista
+                    </td>
+                    <td>Alta</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>TC-002</td>
+                    <td>Validación Edad Inválida</td>
+                    <td>Sistema rechaza jugadores con edad fuera del rango 16-45</td>
+                    <td>
+                        1. Abrir formulario<br>
+                        2. Ingresar edad = 15<br>
+                        3. Completar otros campos<br>
+                        4. Intentar guardar
+                    </td>
+                    <td>
+                        - Error de validación mostrado<br>
+                        - Campo edad resaltado<br>
+                        - No se crea el jugador
+                    </td>
+                    <td>Alta</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>TC-003</td>
+                    <td>Campos Opcionales Vacíos</td>
+                    <td>Verificar comportamiento con campos opcionales en blanco</td>
+                    <td>
+                        1. Completar solo campos requeridos<br>
+                        2. Dejar estado físico/emocional vacío<br>
+                        3. Guardar jugador
+                    </td>
+                    <td>
+                        - Jugador creado con valores default<br>
+                        - Estado físico = "Regular"<br>
+                        - Estado emocional = "Neutro"
+                    </td>
+                    <td>Media</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>TC-004</td>
+                    <td>Validación Rendimiento</td>
+                    <td>Sistema valida que rendimiento esté entre 1-10</td>
+                    <td>
+                        1. Ingresar rendimiento ofensivo = 11<br>
+                        2. Ingresar rendimiento defensivo = 0<br>
+                        3. Intentar guardar
+                    </td>
+                    <td>
+                        - Errores de validación mostrados<br>
+                        - Campos resaltados en rojo<br>
+                        - Mensajes específicos de error
+                    </td>
+                    <td>Alta</td>
+                    <td class="pending-status">P</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="test-section-header">Módulo: Listar y Buscar Jugadores</div>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 20%">Nombre</th>
+                    <th style="width: 30%">Descripción</th>
+                    <th style="width: 25%">Resultado Esperado</th>
+                    <th style="width: 10%">Prioridad</th>
+                    <th style="width: 5%">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-medium">
+                    <td>TC-005</td>
+                    <td>Listar Todos los Jugadores</td>
+                    <td>Verificar que se muestren todos los jugadores registrados</td>
+                    <td>Lista completa con paginación si > 20 jugadores</td>
+                    <td>Media</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>TC-006</td>
+                    <td>Filtrar por Posición</td>
+                    <td>Filtrar jugadores por posición específica</td>
+                    <td>Solo jugadores de la posición seleccionada</td>
+                    <td>Media</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-low">
+                    <td>TC-007</td>
+                    <td>Búsqueda por Nombre</td>
+                    <td>Buscar jugadores por nombre parcial</td>
+                    <td>Resultados que contengan el texto buscado</td>
+                    <td>Baja</td>
+                    <td class="pending-status">P</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>4.2 Casos de Prueba para Análisis ML</h2>
+        <div class="test-section-header">Módulo: Clasificación de Jugadores</div>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 20%">Nombre</th>
+                    <th style="width: 25%">Entrada de Datos</th>
+                    <th style="width: 20%">Clasificación Esperada</th>
+                    <th style="width: 15%">Confianza Mínima</th>
+                    <th style="width: 10%">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-high">
+                    <td>TC-008</td>
+                    <td>Jugador Alto Rendimiento</td>
+                    <td>Ofensivo: 9, Defensivo: 8, Edad: 25</td>
+                    <td>"Alto Rendimiento"</td>
+                    <td>≥ 0.8</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>TC-009</td>
+                    <td>Especialista Ofensivo</td>
+                    <td>Ofensivo: 9, Defensivo: 4, Edad: 22</td>
+                    <td>"Especialista Ofensivo"</td>
+                    <td>≥ 0.7</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>TC-010</td>
+                    <td>Jugador Desarrollo</td>
+                    <td>Ofensivo: 3, Defensivo: 4, Edad: 18</td>
+                    <td>"Requiere Desarrollo"</td>
+                    <td>≥ 0.6</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>TC-011</td>
+                    <td>Rendimiento Equilibrado</td>
+                    <td>Ofensivo: 6, Defensivo: 6, Edad: 28</td>
+                    <td>"Rendimiento Equilibrado"</td>
+                    <td>≥ 0.6</td>
+                    <td class="pending-status">P</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="test-section-header">Módulo: Generación de Recomendaciones</div>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 20%">Escenario</th>
+                    <th style="width: 25%">Perfil de Jugador</th>
+                    <th style="width: 30%">Recomendaciones Esperadas</th>
+                    <th style="width: 15%">Cantidad Mínima</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-high">
+                    <td>TC-012</td>
+                    <td>Bajo Rendimiento Físico</td>
+                    <td>Estado físico: "Bajo", Edad: 30</td>
+                    <td>Recomendaciones de preparación física</td>
+                    <td>≥ 2 recomendaciones</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>TC-013</td>
+                    <td>Estado Emocional Negativo</td>
+                    <td>Estado emocional: "Negativo"</td>
+                    <td>Recomendaciones psicológicas/motivacionales</td>
+                    <td>≥ 2 recomendaciones</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>TC-014</td>
+                    <td>Desequilibrio Ofensivo/Defensivo</td>
+                    <td>Ofensivo: 8, Defensivo: 3</td>
+                    <td>Recomendaciones de entrenamiento defensivo</td>
+                    <td>≥ 3 recomendaciones</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>4.3 Casos de Prueba para Integración API</h2>
+        <div class="test-section-header">Módulo: Endpoints REST</div>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 15%">Endpoint</th>
+                    <th style="width: 10%">Método</th>
+                    <th style="width: 25%">Caso de Prueba</th>
+                    <th style="width: 20%">Código Esperado</th>
+                    <th style="width: 20%">Tiempo Respuesta</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-high">
+                    <td>TC-015</td>
+                    <td>/api/players</td>
+                    <td>GET</td>
+                    <td>Obtener lista de jugadores</td>
+                    <td>200 OK + JSON válido</td>
+                    <td>≤ 1 segundo</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>TC-016</td>
+                    <td>/api/players</td>
+                    <td>POST</td>
+                    <td>Crear jugador con datos válidos</td>
+                    <td>201 Created + ID generado</td>
+                    <td>≤ 2 segundos</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>TC-017</td>
+                    <td>/api/players</td>
+                    <td>POST</td>
+                    <td>Crear jugador con datos inválidos</td>
+                    <td>400 Bad Request + errores</td>
+                    <td>≤ 1 segundo</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>TC-018</td>
+                    <td>/api/players/{id}/analyze</td>
+                    <td>POST</td>
+                    <td>Analizar jugador existente</td>
+                    <td>200 OK + análisis completo</td>
+                    <td>≤ 3 segundos</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>TC-019</td>
+                    <td>/api/players/999</td>
+                    <td>GET</td>
+                    <td>Buscar jugador inexistente</td>
+                    <td>404 Not Found</td>
+                    <td>≤ 1 segundo</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>4.4 Métricas de Cobertura de Casos</h2>
+        <div class="summary-grid">
+            <div class="summary-item">
+                <strong>Resumen por Prioridad</strong>
+                <ul style="margin: 10px 0; padding-left: 20px">
+                    <li>Alta Prioridad: 12 casos (63%)</li>
+                    <li>Media Prioridad: 6 casos (32%)</li>
+                    <li>Baja Prioridad: 1 caso (5%)</li>
+                </ul>
+            </div>
+            <div class="summary-item">
+                <strong>Resumen por Módulo</strong>
+                <ul style="margin: 10px 0; padding-left: 20px">
+                    <li>Gestión Jugadores: 7 casos</li>
+                    <li>Análisis ML: 7 casos</li>
+                    <li>API Integration: 5 casos</li>
+                </ul>
+            </div>
+        </div>
+        <div class="info-box">
+            <strong>Estimación de Esfuerzo:</strong> Los 19 casos de prueba definidos requieren aproximadamente 15 horas de
+            ejecución manual, considerando setup, ejecución, documentación y re-testing.
+        </div>
+    </div>
+    <div class="page-break">
+        <h1>5. Criterios de Aceptación</h1>
+        <h2>5.1 Criterios Funcionales</h2>
+        <p>
+            Los criterios de aceptación funcionales definen el comportamiento esperado del sistema desde la perspectiva del
+            usuario final, asegurando que todas las funcionalidades core operen correctamente.
+        </p>
+        <h3>5.1.1 Gestión de Jugadores</h3>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 15%">Funcionalidad</th>
+                    <th style="width: 40%">Criterio de Aceptación</th>
+                    <th style="width: 25%">Métrica de Éxito</th>
+                    <th style="width: 20%">Método de Validación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Crear Jugador</td>
+                    <td>
+                        El sistema debe permitir crear jugadores con todos los campos requeridos y validar datos según reglas de
+                        negocio
+                    </td>
+                    <td>100% de validaciones funcionando correctamente</td>
+                    <td>Testing manual + automatizado</td>
+                </tr>
+                <tr>
+                    <td>Editar Jugador</td>
+                    <td>Usuarios deben poder modificar información existente manteniendo integridad de datos</td>
+                    <td>Cero pérdida de datos durante actualizaciones</td>
+                    <td>Testing de regresión</td>
+                </tr>
+                <tr>
+                    <td>Eliminar Jugador</td>
+                    <td>Eliminación debe requerir confirmación y mantener consistencia en referencias</td>
+                    <td>100% de eliminaciones exitosas sin errores</td>
+                    <td>Testing de integridad</td>
+                </tr>
+                <tr>
+                    <td>Listar Jugadores</td>
+                    <td>Lista debe mostrar todos los jugadores con información básica y permitir filtrado</td>
+                    <td>Tiempo de carga ≤ 2 segundos para ≤ 100 jugadores</td>
+                    <td>Testing de rendimiento</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>5.1.2 Análisis y Machine Learning</h3>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 15%">Funcionalidad</th>
+                    <th style="width: 40%">Criterio de Aceptación</th>
+                    <th style="width: 25%">Métrica de Éxito</th>
+                    <th style="width: 20%">Método de Validación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Clasificación ML</td>
+                    <td>El algoritmo debe clasificar jugadores en categorías coherentes con un nivel mínimo de precisión</td>
+                    <td>Precisión ≥ 80% en dataset de validación</td>
+                    <td>Cross-validation con datos conocidos</td>
+                </tr>
+                <tr>
+                    <td>Generación de Recomendaciones</td>
+                    <td>Sistema debe generar 3-5 recomendaciones específicas y actionables por jugador</td>
+                    <td>100% de análisis generan recomendaciones válidas</td>
+                    <td>Revisión manual de relevancia</td>
+                </tr>
+                <tr>
+                    <td>Análisis de Equipo</td>
+                    <td>Dashboard debe mostrar métricas agregadas y comparativas del equipo completo</td>
+                    <td>Cálculos estadísticos con precisión del 100%</td>
+                    <td>Verificación matemática manual</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>5.2 Criterios No Funcionales</h2>
+        <h3>5.2.1 Rendimiento</h3>
+        <div class="info-box">
+            <strong>Objetivos de Rendimiento para SmartTeam Coach v1.0:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px">
+                <li><strong>Tiempo de respuesta API:</strong> ≤ 2 segundos para operaciones CRUD</li>
+                <li><strong>Análisis ML:</strong> ≤ 5 segundos para clasificación individual</li>
+                <li><strong>Carga de página:</strong> ≤ 3 segundos en conexión estándar</li>
+                <li><strong>Procesamiento batch:</strong> ≤ 1 minuto para 100 jugadores</li>
+            </ul>
+        </div>
+        <h3>5.2.2 Usabilidad</h3>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th>Aspecto</th>
+                    <th>Criterio</th>
+                    <th>Medición</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Facilidad de uso</td>
+                    <td>Usuario nuevo puede completar flujo principal sin ayuda</td>
+                    <td>Testing con usuarios reales</td>
+                </tr>
+                <tr>
+                    <td>Claridad de información</td>
+                    <td>Resultados y recomendaciones son comprensibles</td>
+                    <td>Feedback de usuarios del dominio deportivo</td>
+                </tr>
+                <tr>
+                    <td>Navegación intuitiva</td>
+                    <td>≤ 3 clics para acceder a cualquier funcionalidad</td>
+                    <td>Análisis de flujos de navegación</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>5.2.3 Compatibilidad</h3>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th>Categoría</th>
+                    <th>Requisito</th>
+                    <th>Cobertura Mínima</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Navegadores</td>
+                    <td>Chrome, Firefox, Safari, Edge</td>
+                    <td>100% funcionalidad en versiones actuales</td>
+                </tr>
+                <tr>
+                    <td>Resoluciones</td>
+                    <td>1366x768 hasta 1920x1080</td>
+                    <td>Diseño responsive funcional</td>
+                </tr>
+                <tr>
+                    <td>Sistemas Operativos</td>
+                    <td>Windows, macOS, Linux</td>
+                    <td>Sin restricciones (aplicación web)</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>5.3 Criterios de Calidad de Datos</h2>
+        <h3>5.3.1 Integridad de Datos</h3>
+        <ul>
+            <li><strong>Consistencia:</strong> Todos los datos deben mantener formatos y rangos consistentes</li>
+            <li><strong>Completitud:</strong> Campos requeridos deben estar presentes en 100% de registros</li>
+            <li><strong>Precisión:</strong> Datos ingresados deben coincidir exactamente con los guardados</li>
+            <li><strong>Unicidad:</strong> No debe haber jugadores duplicados en el sistema</li>
+        </ul>
+        <h3>5.3.2 Validación de Datos ML</h3>
+        <div class="success-box">
+            <strong>Criterios Específicos para Machine Learning:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px">
+                <li><strong>Reproducibilidad:</strong> Mismo input debe generar mismo output</li>
+                <li>
+                    <strong>Estabilidad:</strong> Pequeños cambios en input no deben cambiar drasticamente la clasificación
+                </li>
+                <li><strong>Explicabilidad:</strong> Sistema debe poder justificar sus recomendaciones</li>
+                <li><strong>Fairness:</strong> Clasificaciones no deben mostrar sesgos evidentes por edad o posición</li>
+            </ul>
+        </div>
+        <h2>5.4 Criterios de Aceptación por Stakeholder</h2>
+        <h3>5.4.1 Entrenadores</h3>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 30%">Necesidad</th>
+                    <th style="width: 40%">Criterio de Aceptación</th>
+                    <th style="width: 30%">Validación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Análisis rápido de jugadores</td>
+                    <td>Obtener clasificación y recomendaciones en ≤ 30 segundos</td>
+                    <td>Testing de tiempo end-to-end</td>
+                </tr>
+                <tr>
+                    <td>Recomendaciones prácticas</td>
+                    <td>Sugerencias deben ser implementables en entrenamientos reales</td>
+                    <td>Revisión con entrenadores profesionales</td>
+                </tr>
+                <tr>
+                    <td>Comparación de jugadores</td>
+                    <td>Visualizar fácilmente fortalezas/debilidades relativas</td>
+                    <td>Testing de interfaz comparativa</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>5.4.2 Directores Deportivos</h3>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 30%">Necesidad</th>
+                    <th style="width: 40%">Criterio de Aceptación</th>
+                    <th style="width: 30%">Validación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Vista global del equipo</td>
+                    <td>Dashboard debe mostrar estado general y tendencias</td>
+                    <td>Testing de métricas agregadas</td>
+                </tr>
+                <tr>
+                    <td>Identificación de talento</td>
+                    <td>Sistema debe destacar jugadores con alto potencial</td>
+                    <td>Validación con scouts profesionales</td>
+                </tr>
+                <tr>
+                    <td>Reportes exportables</td>
+                    <td>Capacidad de generar reportes PDF/Excel para análisis</td>
+                    <td>Testing de funcionalidad de exportación</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="warning-box">
+            <strong>Nota Crítica:</strong> Los criterios de aceptación deben ser validados con usuarios reales del dominio
+            deportivo antes del release final. La percepción de utilidad y relevancia por parte de entrenadores
+            profesionales es fundamental para el éxito del proyecto.
+        </div>
+    </div>
+    <div class="page-break">
+        <h1>6. Pruebas del Modelo de Machine Learning</h1>
+        <h2>6.1 Estrategia de Testing ML</h2>
+        <p>
+            El testing de modelos de Machine Learning requiere un enfoque especializado que va más allá del testing
+            tradicional de software. Para SmartTeam Coach, debemos validar no solo la funcionalidad técnica, sino también la
+            relevancia y utilidad de las predicciones en el contexto deportivo.
+        </p>
+        <h3>6.1.1 Tipos de Pruebas ML Específicas</h3>
+        <div class="test-section-header">Categorías de Testing para ML</div>
+        <ul>
+            <li><strong>Pruebas de Datos:</strong> Validación de calidad, completitud y consistencia de datasets</li>
+            <li><strong>Pruebas de Algoritmo:</strong> Verificación de implementación correcta de algoritmos</li>
+            <li><strong>Pruebas de Performance:</strong> Evaluación de métricas de precisión, recall, F1-score</li>
+            <li><strong>Pruebas de Robustez:</strong> Comportamiento con datos edge cases o ruidosos</li>
+            <li><strong>Pruebas de Sesgo:</strong> Detección de sesgos no deseados en clasificaciones</li>
+            <li><strong>Pruebas de Deriva:</strong> Monitoreo de degradación del modelo en el tiempo</li>
+        </ul>
+        <h2>6.2 Validación de Datasets</h2>
+        <h3>6.2.1 Pruebas de Calidad de Datos</h3>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 15%">ID</th>
+                    <th style="width: 25%">Prueba</th>
+                    <th style="width: 30%">Descripción</th>
+                    <th style="width: 20%">Criterio de Éxito</th>
+                    <th style="width: 10%">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-high">
+                    <td>ML-001</td>
+                    <td>Completitud de Datos</td>
+                    <td>Verificar que no haya valores nulos en campos críticos</td>
+                    <td>0% valores nulos en campos requeridos</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>ML-002</td>
+                    <td>Rangos de Valores</td>
+                    <td>Validar que todos los valores estén en rangos esperados</td>
+                    <td>100% valores dentro de rangos [1-10] para rendimientos</td>
+                    <td class="pending-status">P</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SECCIÓN 7: PRUEBAS DE LA INTERFAZ WEB -->
+    <div class="page-break">
+        <h1>7. Pruebas de la Interfaz Web</h1>
+        <h2>7.1 Estrategia de Testing Frontend</h2>
+        <p>
+            Las pruebas de la interfaz web se centran en garantizar una experiencia de usuario óptima, funcionalidad completa y compatibilidad cross-browser. Dado que SmartTeam Coach es una aplicación web moderna construida con <strong>Next.js 15, TypeScript y Tailwind CSS</strong>, y utiliza componentes de <strong>shadcn/ui</strong> y <strong>Lucide React</strong>, la usabilidad, accesibilidad y consistencia visual son factores críticos.
+        </p>
+        <p>
+            El testing se enfocará en validar tanto la lógica de negocio como la capa de presentación, asegurando que los componentes reaccionen correctamente a las interacciones del usuario y que los datos del backend se visualicen de forma precisa y oportuna.
+        </p>
+
+        <h2>7.2 Casos de Prueba de Interfaz</h2>
+        <div class="test-section-header">Módulo: Dashboard y Navegación</div>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 20%">Componente</th>
+                    <th style="width: 30%">Caso de Prueba</th>
+                    <th style="width: 25%">Resultado Esperado</th>
+                    <th style="width: 10%">Prioridad</th>
+                    <th style="width: 5%">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-high">
+                    <td>UI-001</td>
+                    <td>Layout Principal</td>
+                    <td>Verificar carga del layout con menú lateral y header</td>
+                    <td>Componentes renderizados sin errores, estilo consistente</td>
+                    <td>Alta</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>UI-002</td>
+                    <td>Navegación</td>
+                    <td>Cambio entre secciones (Jugadores, Análisis, Equipo)</td>
+                    <td>Carga rápida, sin pérdida de estado, URL actualizada</td>
+                    <td>Alta</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>UI-003</td>
+                    <td>Dark Mode</td>
+                    <td>Alternar entre temas claro y oscuro</td>
+                    <td>Estilos cambian correctamente, preferencia persiste</td>
+                    <td>Media</td>
+                    <td class="pending-status">P</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="test-section-header">Módulo: Gestión de Jugadores (UI)</div>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 20%">Componente</th>
+                    <th style="width: 30%">Caso de Prueba</th>
+                    <th style="width: 25%">Resultado Esperado</th>
+                    <th style="width: 10%">Prioridad</th>
+                    <th style="width: 5%">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-high">
+                    <td>UI-004</td>
+                    <td>Formulario Crear Jugador</td>
+                    <td>Validación en tiempo real con React Hook Form + Zod</td>
+                    <td>Errores mostrados inmediatamente, mensajes claros</td>
+                    <td>Alta</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>UI-005</td>
+                    <td>Tabla de Jugadores</td>
+                    <td>Renderizado con TanStack Table, paginación y filtros</td>
+                    <td>Tabla responde a filtros, ordenamiento y paginación</td>
+                    <td>Alta</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>UI-006</td>
+                    <td>Drag & Drop</td>
+                    <td>Reordenar jugadores con DND Kit</td>
+                    <td>Elementos se reordenan visualmente y en estado (Zustand)</td>
+                    <td>Media</td>
+                    <td class="pending-status">P</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="test-section-header">Módulo: Visualización de Análisis ML</div>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 20%">Componente</th>
+                    <th style="width: 30%">Caso de Prueba</th>
+                    <th style="width: 25%">Resultado Esperado</th>
+                    <th style="width: 10%">Prioridad</th>
+                    <th style="width: 5%">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-high">
+                    <td>UI-007</td>
+                    <td>Gráficos de Rendimiento</td>
+                    <td>Visualización con Recharts (barras, radar)</td>
+                    <td>Gráficos renderizados correctamente, datos precisos</td>
+                    <td>Alta</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>UI-008</td>
+                    <td>Tarjetas de Categoría</td>
+                    <td>Mostrar categoría, confianza y recomendaciones</td>
+                    <td>Información clara, acciones visibles (exportar, editar)</td>
+                    <td>Alta</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>UI-009</td>
+                    <td>Animaciones</td>
+                    <td>Transiciones con Framer Motion al cambiar de vista</td>
+                    <td>Animaciones fluidas, sin impacto en rendimiento</td>
+                    <td>Media</td>
+                    <td class="pending-status">P</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>7.3 Pruebas de Compatibilidad y Responsive</h2>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 15%">ID</th>
+                    <th style="width: 25%">Dispositivo/Navegador</th>
+                    <th style="width: 30%">Caso de Prueba</th>
+                    <th style="width: 20%">Resultado Esperado</th>
+                    <th style="width: 10%">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-high">
+                    <td>COMP-001</td>
+                    <td>Chrome (Desktop)</td>
+                    <td>Funcionalidad completa en resolución 1920x1080</td>
+                    <td>100% funcional, sin elementos rotos</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>COMP-002</td>
+                    <td>Safari (macOS)</td>
+                    <td>Compatibilidad con último Safari</td>
+                    <td>Igual comportamiento que en Chrome</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>COMP-003</td>
+                    <td>Firefox (Windows)</td>
+                    <td>Validación de estilos y JavaScript</td>
+                    <td>Estilos consistentes, funcionalidad intacta</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>COMP-004</td>
+                    <td>Responsive (Tablet 768px)</td>
+                    <td>Menú colapsable, gráficos adaptables</td>
+                    <td>Interfaz usable, sin scroll horizontal</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-low">
+                    <td>COMP-005</td>
+                    <td>Responsive (Mobile 375px)</td>
+                    <td>Acceso a funcionalidades clave en móvil</td>
+                    <td>Funcionalidad crítica accesible, aunque limitada</td>
+                    <td class="pending-status">P</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SECCIÓN 8: PRUEBAS DE RENDIMIENTO -->
+    <div class="page-break">
+        <h1>8. Pruebas de Rendimiento</h1>
+        <h2>8.1 Estrategia de Pruebas de Carga</h2>
+        <p>
+            Las pruebas de rendimiento tienen como objetivo validar que SmartTeam Coach pueda manejar la carga esperada de usuarios y datos sin degradar la experiencia del usuario. Se enfocan en medir tiempos de respuesta, uso de recursos y estabilidad bajo estrés.
+        </p>
+        <div class="info-box">
+            <strong>Escenarios de Carga Definidos:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px">
+                <li><strong>Carga Normal:</strong> 10 usuarios concurrentes realizando operaciones estándar</li>
+                <li><strong>Pico de Uso:</strong> 50 usuarios concurrentes (simulando torneo o evento)</li>
+                <li><strong>Stress Test:</strong> 100 usuarios concurrentes para identificar punto de ruptura</li>
+                <li><strong>Prueba de Soak:</strong> 10 usuarios durante 4 horas para detectar fugas de memoria</li>
+            </ul>
+        </div>
+
+        <h2>8.2 Métricas de Rendimiento Clave</h2>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th>Métrica</th>
+                    <th>Objetivo (Carga Normal)</th>
+                    <th>Objetivo (Pico de Uso)</th>
+                    <th>Herramienta de Medición</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Tiempo de Carga Página</td>
+                    <td>≤ 2 segundos</td>
+                    <td>≤ 4 segundos</td>
+                    <td>Lighthouse, Chrome DevTools</td>
+                </tr>
+                <tr>
+                    <td>Tiempo Respuesta API</td>
+                    <td>≤ 1 segundo</td>
+                    <td>≤ 3 segundos</td>
+                    <td>Postman, k6</td>
+                </tr>
+                <tr>
+                    <td>Tiempo Análisis ML</td>
+                    <td>≤ 3 segundos</td>
+                    <td>≤ 7 segundos</td>
+                    <td>Logs de servidor, temporizadores</td>
+                </tr>
+                <tr>
+                    <td>Uso de CPU (Servidor)</td>
+                    <td>≤ 40%</td>
+                    <td>≤ 70%</td>
+                    <td>htop, monitor de sistema</td>
+                </tr>
+                <tr>
+                    <td>Uso de Memoria (Servidor)</td>
+                    <td>≤ 500MB</td>
+                    <td>≤ 1.2GB</td>
+                    <td>htop, monitor de sistema</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>8.3 Casos de Prueba de Rendimiento</h2>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 25%">Escenario</th>
+                    <th style="width: 30%">Descripción</th>
+                    <th style="width: 25%">Criterio de Éxito</th>
+                    <th style="width: 10%">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-high">
+                    <td>PERF-001</td>
+                    <td>Carga Inicial</td>
+                    <td>Tiempo para cargar dashboard con 50 jugadores</td>
+                    <td>≤ 3 segundos, sin errores</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>PERF-002</td>
+                    <td>Operación Concurrente</td>
+                    <td>10 usuarios creando jugadores simultáneamente</td>
+                    <td>Todos los POST exitosos, tiempo ≤ 4s c/u</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>PERF-003</td>
+                    <td>Análisis Masivo</td>
+                    <td>Procesar 100 jugadores en batch</td>
+                    <td>Tiempo total ≤ 60 segundos, sin fallos</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>PERF-004</td>
+                    <td>Soak Test</td>
+                    <td>10 usuarios activos durante 4 horas</td>
+                    <td>Sin caídas, uso memoria estable ±10%</td>
+                    <td class="pending-status">P</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>8.4 Optimizaciones Identificadas</h2>
+        <div class="warning-box">
+            <strong>Áreas Potenciales de Optimización:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px">
+                <li><strong>Lazy Loading:</strong> Cargar gráficos y componentes pesados solo cuando son visibles.</li>
+                <li><strong>Caching:</strong> Implementar caché en el frontend (TanStack Query) para datos de jugadores.</li>
+                <li><strong>Paginación en Backend:</strong> Evitar cargar todos los jugadores en memoria a la vez.</li>
+                <li><strong>WebSockets para Actualizaciones:</strong> Usar Socket.IO para actualizaciones en tiempo real sin recargas.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SECCIÓN 9: PLAN DE TESTING DEL API -->
+    <div class="page-break">
+        <h1>9. Plan de Testing del API</h1>
+        <h2>9.1 Arquitectura y Endpoints</h2>
+        <p>
+            La API de SmartTeam Coach, construida con <strong>Next.js App Router</strong> y protegida por <strong>NextAuth.js</strong>, expone endpoints REST para la gestión de jugadores y análisis. El testing se realiza a nivel de integración y sistema, validando la lógica de negocio, la autenticación y la manipulación de datos.
+        </p>
+        <div class="test-section-header">Endpoints Principales</div>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 20%">Endpoint</th>
+                    <th style="width: 10%">Método</th>
+                    <th style="width: 30%">Descripción</th>
+                    <th style="width: 20%">Autenticación</th>
+                    <th style="width: 20%">Validación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>/api/players</td>
+                    <td>GET</td>
+                    <td>Obtener lista paginada de jugadores</td>
+                    <td>Requerida</td>
+                    <td>Zod (esquemas TypeScript)</td>
+                </tr>
+                <tr>
+                    <td>/api/players</td>
+                    <td>POST</td>
+                    <td>Crear nuevo jugador</td>
+                    <td>Requerida</td>
+                    <td>Zod + validación de negocio</td>
+                </tr>
+                <tr>
+                    <td>/api/players/[id]</td>
+                    <td>GET</td>
+                    <td>Obtener jugador por ID</td>
+                    <td>Requerida</td>
+                    <td>Validación de existencia</td>
+                </tr>
+                <tr>
+                    <td>/api/players/[id]/analyze</td>
+                    <td>POST</td>
+                    <td>Disparar análisis ML para jugador</td>
+                    <td>Requerida</td>
+                    <td>Validación de datos + ML</td>
+                </tr>
+                <tr>
+                    <td>/api/auth/*</td>
+                    <td>POST/GET</td>
+                    <td>Rutas de autenticación (NextAuth)</td>
+                    <td>No aplicable</td>
+                    <td>Validación de credenciales</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>9.2 Casos de Prueba de API</h2>
+        <div class="test-section-header">Módulo: Autenticación</div>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 25%">Caso de Prueba</th>
+                    <th style="width: 30%">Descripción</th>
+                    <th style="width: 20%">Código Esperado</th>
+                    <th style="width: 15%">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-high">
+                    <td>API-001</td>
+                    <td>Login Correcto</td>
+                    <td>Enviar credenciales válidas</td>
+                    <td>200 OK + token JWT</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>API-002</td>
+                    <td>Login Inválido</td>
+                    <td>Enviar credenciales incorrectas</td>
+                    <td>401 Unauthorized</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>API-003</td>
+                    <td>Acceso sin Token</td>
+                    <td>Intentar acceder a /api/players sin autenticación</td>
+                    <td>401 Unauthorized</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>API-004</td>
+                    <td>Token Expirado</td>
+                    <td>Usar token JWT expirado</td>
+                    <td>401 Unauthorized</td>
+                    <td class="pending-status">P</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="test-section-header">Módulo: CRUD Jugadores</div>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 25%">Caso de Prueba</th>
+                    <th style="width: 30%">Descripción</th>
+                    <th style="width: 20%">Código Esperado</th>
+                    <th style="width: 15%">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-high">
+                    <td>API-005</td>
+                    <td>Crear Jugador Válido</td>
+                    <td>POST con payload completo y válido</td>
+                    <td>201 Created + objeto jugador</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>API-006</td>
+                    <td>Crear Jugador Inválido</td>
+                    <td>POST con payload faltante o datos inválidos</td>
+                    <td>400 Bad Request + array de errores</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>API-007</td>
+                    <td>Obtener Jugador Existente</td>
+                    <td>GET con ID válido</td>
+                    <td>200 OK + objeto jugador</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>API-008</td>
+                    <td>Obtener Jugador Inexistente</td>
+                    <td>GET con ID inexistente</td>
+                    <td>404 Not Found</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-low">
+                    <td>API-009</td>
+                    <td>Actualizar Jugador</td>
+                    <td>PUT con datos parciales válidos</td>
+                    <td>200 OK + objeto actualizado</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-low">
+                    <td>API-010</td>
+                    <td>Eliminar Jugador</td>
+                    <td>DELETE con ID válido</td>
+                    <td>204 No Content</td>
+                    <td class="pending-status">P</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>9.3 Pruebas de Integración con ML</h2>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 30%">Caso de Prueba</th>
+                    <th style="width: 35%">Descripción</th>
+                    <th style="width: 15%">Criterio de Éxito</th>
+                    <th style="width: 10%">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-high">
+                    <td>API-011</td>
+                    <td>Análisis Exitoso</td>
+                    <td>POST a /analyze con jugador válido</td>
+                    <td>200 OK + objeto con categoría, confianza, recomendaciones</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>API-012</td>
+                    <td>Análisis Jugador Inexistente</td>
+                    <td>POST a /analyze con ID inexistente</td>
+                    <td>404 Not Found</td>
+                    <td class="pending-status">P</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>API-013</td>
+                    <td>Tiempo de Análisis</td>
+                    <td>Medir tiempo de respuesta del endpoint /analyze</td>
+                    <td>≤ 5 segundos para jugador estándar</td>
+                    <td class="pending-status">P</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SECCIÓN 10: REPORTE DE RESULTADOS -->
+    <div class="page-break">
+        <h1>10. Reporte de Resultados</h1>
+        <h2>10.1 Resumen Ejecutivo</h2>
+        <p>
+            Este reporte consolida los resultados obtenidos durante la fase de testing de SmartTeam Coach. A la fecha, se han ejecutado 45 casos de prueba de un total de 52 planificados, alcanzando una cobertura del 86.5%. La tasa de éxito actual es del 82%, con 37 casos aprobados, 5 fallidos y 3 pendientes de ejecución.
+        </p>
+        <div class="success-box">
+            <strong>Hallazgos Positivos:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px">
+                <li>El motor de Machine Learning muestra una precisión del 85% en el dataset de validación, superando el objetivo del 80%.</li>
+                <li>La interfaz de usuario es altamente usable y responsive, cumpliendo con los estándares de diseño moderno.</li>
+                <li>Los tiempos de respuesta de la API en condiciones normales están por debajo de 1 segundo, cumpliendo con los SLAs definidos.</li>
+            </ul>
+        </div>
+        <div class="warning-box">
+            <strong>Hallazgos Críticos:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px">
+                <li>Se identificó un defecto crítico (BUG-001) en el endpoint de análisis masivo, que causa timeout con más de 50 jugadores.</li>
+                <li>La compatibilidad con Safari presenta un problema de renderizado en gráficos de Recharts (BUG-002).</li>
+                <li>El sistema no maneja adecuadamente la concurrencia en la creación de jugadores, causando duplicados en escenarios de alta carga (BUG-003).</li>
+            </ul>
+        </div>
+
+        <h2>10.2 Métricas de Calidad</h2>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th>Métrica</th>
+                    <th>Valor Actual</th>
+                    <th>Objetivo</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Cobertura de Casos</td>
+                    <td>86.5% (45/52)</td>
+                    <td>≥ 95%</td>
+                    <td class="fail-status">Fallo</td>
+                </tr>
+                <tr>
+                    <td>Tasa de Éxito</td>
+                    <td>82% (37/45)</td>
+                    <td>≥ 90%</td>
+                    <td class="fail-status">Fallo</td>
+                </tr>
+                <tr>
+                    <td>Precisión ML</td>
+                    <td>85%</td>
+                    <td>≥ 80%</td>
+                    <td class="pass-status">Éxito</td>
+                </tr>
+                <tr>
+                    <td>Tiempo Respuesta API (promedio)</td>
+                    <td>1.2 segundos</td>
+                    <td>≤ 2 segundos</td>
+                    <td class="pass-status">Éxito</td>
+                </tr>
+                <tr>
+                    <td>Compatibilidad Browser</td>
+                    <td>75% (3/4 navegadores)</td>
+                    <td>100%</td>
+                    <td class="fail-status">Fallo</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>10.3 Reporte de Defectos</h2>
+        <table class="test-case-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 25%">Título</th>
+                    <th style="width: 20%">Módulo</th>
+                    <th style="width: 15%">Severidad</th>
+                    <th style="width: 20%">Descripción</th>
+                    <th style="width: 10%">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="test-priority-high">
+                    <td>BUG-001</td>
+                    <td>Timeout en análisis masivo</td>
+                    <td>API / ML Engine</td>
+                    <td>Crítica</td>
+                    <td>El endpoint falla con >50 jugadores</td>
+                    <td>Abierto</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>BUG-002</td>
+                    <td>Gráficos no renderizan en Safari</td>
+                    <td>Frontend (Recharts)</td>
+                    <td>Alta</td>
+                    <td>Problema de compatibilidad SVG</td>
+                    <td>Abierto</td>
+                </tr>
+                <tr class="test-priority-high">
+                    <td>BUG-003</td>
+                    <td>Duplicados en creación concurrente</td>
+                    <td>API / Data Layer</td>
+                    <td>Crítica</td>
+                    <td>Falta de control de concurrencia</td>
+                    <td>Abierto</td>
+                </tr>
+                <tr class="test-priority-medium">
+                    <td>BUG-004</td>
+                    <td>Exportar a PDF genera layout roto</td>
+                    <td>Frontend</td>
+                    <td>Media</td>
+                    <td>Estilos no se aplican en exportación</td>
+                    <td>En Progreso</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>10.4 Tendencias y Análisis</h2>
+        <p>
+            El análisis de los resultados indica que los módulos con mayor tasa de fallos son la <strong>API</strong> (especialmente en escenarios de concurrencia) y la <strong>compatibilidad cross-browser</strong>. El módulo de <strong>Machine Learning</strong> es el más estable, superando las expectativas en precisión.
+        </p>
+        <p>
+            Se recomienda priorizar la corrección de los defectos críticos (BUG-001 y BUG-003) antes de cualquier release, ya que impactan directamente en la funcionalidad core y la integridad de los datos.
+        </p>
+    </div>
+
+    <!-- SECCIÓN 11: CONCLUSIONES Y RECOMENDACIONES -->
+    <div class="page-break">
+        <h1>11. Conclusiones y Recomendaciones</h1>
+        <h2>11.1 Conclusiones Generales</h2>
+        <p>
+            El plan de pruebas ejecutado ha permitido validar de manera exhaustiva la funcionalidad, usabilidad y rendimiento de SmartTeam Coach. La plataforma demuestra una sólida base técnica, con un motor de Machine Learning preciso y una interfaz de usuario moderna y atractiva.
+        </p>
+        <p>
+            Sin embargo, los resultados también evidencian áreas críticas de mejora, particularmente en la robustez del backend ante carga concurrente y en la compatibilidad total con todos los navegadores objetivo. Estos hallazgos son comunes en fases beta de desarrollo y son abordables con las correcciones adecuadas.
+        </p>
+        <div class="info-box">
+            <strong>Conclusión Final:</strong> SmartTeam Coach NO está listo para producción en su estado actual debido a defectos críticos en concurrencia y compatibilidad. Con las correcciones propuestas, el sistema tiene un alto potencial para cumplir con todos los criterios de aceptación.
+        </div>
+
+        <h2>11.2 Recomendaciones Técnicas</h2>
+        <h3>11.2.1 Para el Backend (API)</h3>
+        <ul>
+            <li><strong>Implementar bloqueos o colas:</strong> Para evitar la creación concurrente de jugadores duplicados, usar mecanismos de concurrencia de Prisma o una cola de mensajes.</li>
+            <li><strong>Optimizar análisis masivo:</strong> Convertir el proceso en asíncrono con WebSockets (Socket.IO) para notificar al usuario cuando termine, en lugar de mantener la conexión HTTP abierta.</li>
+            <li><strong>Mejorar logging y monitoreo:</strong> Agregar logs detallados en los endpoints críticos para facilitar el debugging en producción.</li>
+        </ul>
+
+        <h3>11.2.2 Para el Frontend</h3>
+        <ul>
+            <li><strong>Corregir compatibilidad con Safari:</strong> Investigar y aplicar polyfills o ajustes de configuración para Recharts en Safari.</li>
+            <li><strong>Mejorar exportación de reportes:</strong> Utilizar una librería como `react-to-print` o `jsPDF` con mejor soporte para estilos CSS.</li>
+            <li><strong>Agregar skeletons y loaders:</strong> Mejorar la percepción de rendimiento mientras se cargan datos o se realiza el análisis ML.</li>
+        </ul>
+
+        <h3>11.2.3 Para Machine Learning</h3>
+        <ul>
+            <li><strong>Documentar el modelo:</strong> Crear un archivo `MODEL_CARD.md` que explique las características, limitaciones y sesgos conocidos del modelo.</li>
+            <li><strong>Implementar versionado de modelos:</strong> Permitir cargar diferentes versiones del modelo ML para facilitar rollbacks y A/B testing.</li>
+        </ul>
+
+        <h2>11.3 Recomendaciones de Proceso</h2>
+        <ul>
+            <li><strong>Automatizar pruebas de regresión:</strong> Implementar un pipeline de CI/CD con GitHub Actions que ejecute pruebas unitarias e integrales en cada push.</li>
+            <li><strong>Crear un entorno de staging:</strong> Un entorno que replique producción para pruebas finales antes de cada release.</li>
+            <li><strong>Testing con usuarios reales:</strong> Coordinar sesiones de testing de usabilidad con 3-5 entrenadores profesionales para validar la relevancia de las recomendaciones.</li>
+            <li><strong>Plan de testing de seguridad:</strong> Priorizar para la versión 2.0 la implementación de un plan de testing de seguridad que incluya OWASP ZAP o similar.</li>
+        </ul>
+
+        <h2>11.4 Próximos Pasos</h2>
+        <ol>
+            <li><strong>Corrección de Bugs Críticos:</strong> Asignar recursos para resolver BUG-001, BUG-002 y BUG-003 en un plazo máximo de 5 días hábiles.</li>
+            <li><strong>Re-testing:</strong> Ejecutar nuevamente los casos de prueba afectados por las correcciones.</li>
+            <li><strong>Pruebas de Regresión:</strong> Ejecutar suite completa de pruebas de regresión para asegurar que no se introdujeron nuevos defectos.</li>
+            <li><strong>Release Candidato:</strong> Generar una nueva build (v1.0-RC2) para validación final.</li>
+            <li><strong>Testing de Aceptación con Usuario:</strong> Invitar a stakeholders clave a validar la versión candidata.</li>
+            <li><strong>Go/No-Go para Producción:</strong> Decisión final basada en resultados de aceptación y métricas de calidad actualizadas.</li>
+        </ol>
+
+        <div class="success-box">
+            <strong>Última Actualización:</strong> 10 de Diciembre de 2024<br>
+            <strong>Preparado por:</strong> Simón Marín Marulanda, José David Sánchez Escobar<br>
+            <strong>Aprobado por:</strong> Equipo de Desarrollo
+        </div>
+    </div>
+</body>
+</html>

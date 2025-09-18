@@ -1,0 +1,21 @@
+Nombre,Edad,País,Altura_cm,Peso_kg,Posición,Habilidad_Goles,Habilidad_Defensa,Habilidad_Pases,Velocidad,Resistencia,Fuerza,Lesiones_historicas
+Juan Pérez,19,Colombia,178,70,Delantero,85,40,75,90,80,75,2
+Carlos Gómez,21,Argentina,185,82,Defensa,50,92,65,70,85,90,0
+Luis Fernández,20,Ecuador,175,68,Centrocampista,70,70,88,85,90,70,1
+Miguel Ramírez,22,Colombia,180,75,Delantero,90,35,70,95,75,80,3
+Alejandro Torres,23,Argentina,188,85,Defensa,45,95,60,65,90,95,0
+Javier Rojas,18,Ecuador,170,65,Centrocampista,65,75,85,80,88,68,1
+Ricardo Sánchez,21,Colombia,182,78,Delantero,88,42,78,92,82,77,2
+Diego Castro,19,Argentina,176,71,Centrocampista,72,78,90,88,85,72,0
+Sebastián Ortiz,20,Ecuador,190,87,Defensa,48,93,62,68,92,93,1
+Felipe Vargas,22,Colombia,179,74,Delantero,87,38,72,93,78,78,4
+Andrés Medina,23,Argentina,186,84,Defensa,46,94,63,67,91,94,0
+Pablo Herrera,18,Ecuador,174,67,Centrocampista,68,72,87,83,86,69,1
+Gonzalo Acosta,21,Colombia,181,76,Delantero,89,41,76,91,81,76,2
+Nicolás Benítez,19,Argentina,177,73,Centrocampista,75,77,89,87,84,73,0
+Joaquín Silva,20,Ecuador,189,86,Defensa,47,96,61,66,93,96,1
+Mateo Díaz,22,Colombia,178,72,Delantero,86,39,74,94,79,76,3
+Lucas Pérez,23,Argentina,187,83,Defensa,44,97,64,69,95,97,0
+Tomás Núñez,18,Ecuador,173,66,Centrocampista,69,71,86,84,87,67,1
+Elias Rivas,21,Colombia,183,79,Delantero,84,43,79,89,83,81,2
+Valentín Sosa,19,Argentina,175,69,Centrocampista,71,76,82,86,89,70,0
